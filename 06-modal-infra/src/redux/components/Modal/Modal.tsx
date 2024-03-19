@@ -21,8 +21,6 @@ const Modal = () => {
         }
     }
 
-    console.log(modalSelector);
-
     return (
         <Dialog open={modalSelector.open}>
             {renderModal(type as Modal_Types)}
