@@ -1,5 +1,5 @@
 {
-  "name": "01-base-project",
+  "name": "04-redux-form-auth",
   "private": true,
   "version": "0.0.0",
   "type": "module",
