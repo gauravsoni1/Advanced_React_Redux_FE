@@ -7,7 +7,7 @@ const resources = {
         translation: {
             [Translations.ADD_PROPERTY]: "Add Property",
             [Translations.DELETE_PROPERTY]: "Delete Property",
-            "Property Name": "The {{name}} , the rating is {{rating}}"
+            "Property Name": "The {{name}}"
         }
     },
     fr: {

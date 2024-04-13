@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import AppBar from "../../components/AppBar/AppBar";
 import CategoryBar from "../../components/CategoryBar/CategoryBar";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
@@ -27,15 +27,18 @@ const PropertyListing = () => {
         <Container sx={{ display: 'flex', flexDirection: 'column' }} disableGutters maxWidth={false}>
             <AppBar></AppBar>
             <CategoryBar></CategoryBar>
-            {map(data, (property, index) => (
-                <PropertyCard
-                    key={property?._id}
-                    imgSrc={property?.images?.picture_url}
-                    name={property.name}
-                    price={property.price}
-                    rating={property?.review_score?.review_scores_rating} />
-            ))}
-
+            <Grid container spacing={3} padding={2}>
+                {map(data, (property) => (
+                    <Grid item xs={6} md={3} lg={2} key={property?._id}>
+                        <PropertyCard
+                            key={property?._id}
+                            imgSrc={property?.images?.picture_url}
+                            name={property.name}
+                            price={property.price}
+                            rating={property?.review_score?.review_scores_rating} />
+                    </Grid>
+                ))}
+            </Grid>
             <FloatingMenu />
             <Notification />
         </Container>

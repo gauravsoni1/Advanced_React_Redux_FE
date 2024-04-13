@@ -11,7 +11,7 @@ export interface PropertyCardProps {
     rating: string
 }
 
-const PropertyCard = ({ imgSrc, name, price, rating }: PropertyCardProps) => {
+const PropertyCard = ({ imgSrc, name, price, rating = "1" }: PropertyCardProps) => {
     const { t } = useTranslation();
 
     return (
@@ -21,7 +21,7 @@ const PropertyCard = ({ imgSrc, name, price, rating }: PropertyCardProps) => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant='h6'>{t('Property Name', { name: name })}</Typography>
                     <Box display={'flex'}>
-                        <Typography>{rating}</Typography>
+                        <Typography>{parseFloat(rating) / 10}</Typography>
                         <Star sx={{ color: yellow[700] }}></Star>
                     </Box>
                 </Box>
