@@ -24,11 +24,17 @@ function TodoWithAPI() {
     const [isEdited, setIsEdited] = useState<boolean>(false);
     const [editedId, setEditedId] = useState<number | null>(null);
 
-    const { data: todoData } = useGetTodoQuery(editedId);
+    const { data: todoData } = useGetTodoQuery(editedId, { skip: !editedId });
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputVal(e.target.value);
     };
+
+    useEffect(() => {
+        if (isEdited) {
+            setInputVal(todoData?.val);
+        }
+    }, [todoData])
 
     const handleClick = () => {
         if (!isEdited) {
