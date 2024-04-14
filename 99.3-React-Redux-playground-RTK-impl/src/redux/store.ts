@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todoReducer from './slices/todoSlice';
 import { api } from "./api/todo.api";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 const store = configureStore({
     reducer: {
@@ -11,5 +12,7 @@ const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>
+
+setupListeners(store.dispatch);
 
 export default store;

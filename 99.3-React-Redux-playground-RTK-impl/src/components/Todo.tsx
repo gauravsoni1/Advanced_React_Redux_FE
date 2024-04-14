@@ -15,7 +15,6 @@ import { Todo } from "../redux/api/types";
 
 function TodoWithAPI() {
     const [isTaskVisible, setIsTaskVisible] = useState(false);
-    const { data: todoList = [] } = useGetTodosQuery(null);
     const [createTodo] = useCreateTodoMutation();
     const [updateTodo] = useUpdateTodoMutation();
     const [deleteTodo] = useDeleteTodoMutation();
@@ -55,9 +54,8 @@ function TodoWithAPI() {
         deleteTodo(id);
     };
 
-    const handleDone = (id: number) => {
-        const todoToUpdate = todoList.filter((todo: Todo) => todo.id === id)[0];
-        updateTodo({ ...todoToUpdate, isDone: !todoToUpdate?.isDone })
+    const handleDone = (task: Todo) => {
+        updateTodo(task)
     };
 
     const handleEdit = (id: number) => {
@@ -94,27 +92,34 @@ function TodoWithAPI() {
                 {"Show/Hide"}
             </StyledAddButton>
             {isTaskVisible ?
-                <TaskList todoList={todoList} handleDone={handleDone} handleEdit={handleEdit} onDelete={onDelete} /> : null
+                <TaskList handleDone={handleDone} handleEdit={handleEdit} onDelete={onDelete} /> : null
             }
 
         </StyledContainer >
     );
 }
 
-const TaskList = ({ todoList, handleDone, handleEdit, onDelete }: any) => {
+const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
 
-    // useEffect(() => {
-    //     console.log("component mounted");
+    const { data: todoList = [] } = useGetTodosQuery(null, {refetchOnMountOrArgChange: true, refetchOnFocus: true, refetchOnReconnect: true});
 
-    //     return () => console.log("Component unmounted");
-    // }, [])
+    useEffect(() => {
+        console.log("component mounted");
+
+        return () => console.log("Component unmounted");
+    }, [])
+
+    const onDone = (id: number) => {
+        const todoToUpdate = todoList.filter((todo: Todo) => todo.id === id)[0];
+        handleDone({ ...todoToUpdate, isDone: !todoToUpdate?.isDone })
+    };
 
     return (
         <List>
             {todoList && todoList.map((todo: Todo) => (
                 <StyledList divider key={todo.id}>
                     <Checkbox
-                        onClick={() => handleDone(todo.id)}
+                        onClick={() => onDone(todo.id)}
                         checked={todo.isDone}
                     />
                     <StyledText
