@@ -22,6 +22,7 @@ function TodoWithAPI() {
     const [inputVal, setInputVal] = useState<string>("");
     const [isEdited, setIsEdited] = useState<boolean>(false);
     const [editedId, setEditedId] = useState<number | null>(null);
+    const [editedTodo, setEditiedTodo] = useState<Todo | null>(null);
 
     const { data: todoData } = useGetTodoQuery(editedId, { skip: !editedId });
 
@@ -39,7 +40,7 @@ function TodoWithAPI() {
         if (!isEdited) {
             createTodo({ val: inputVal })
         } else {
-            updateTodo({ val: inputVal, isDone: false, id: editedId as number })
+            updateTodo({ val: inputVal, isDone: editedTodo?.isDone, id: editedId as number })
         }
         setInputVal("");
         setIsEdited(false);
@@ -58,8 +59,9 @@ function TodoWithAPI() {
         updateTodo(task)
     };
 
-    const handleEdit = (id: number) => {
-        setEditedId(id);
+    const handleEdit = (todo: Todo) => {
+        setEditedId(todo.id);
+        setEditiedTodo(todo);
         setIsEdited(true);
     };
 
@@ -101,7 +103,7 @@ function TodoWithAPI() {
 
 const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
 
-    const { data: todoList = [] } = useGetTodosQuery(null, {refetchOnMountOrArgChange: true, refetchOnFocus: true, refetchOnReconnect: true});
+    const { data: todoList = [] } = useGetTodosQuery(null, { refetchOnMountOrArgChange: true, refetchOnFocus: true, refetchOnReconnect: true });
 
     useEffect(() => {
         console.log("component mounted");
@@ -113,6 +115,11 @@ const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
         const todoToUpdate = todoList.filter((todo: Todo) => todo.id === id)[0];
         handleDone({ ...todoToUpdate, isDone: !todoToUpdate?.isDone })
     };
+
+    const onEdit = (id: number) => {
+        const todoToUpdate = todoList.filter((todo: Todo) => todo.id === id)[0];
+        handleEdit(todoToUpdate);
+    }
 
     return (
         <List>
@@ -128,7 +135,7 @@ const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
                         {todo.val}
                     </StyledText>
                     <StyledListButton
-                        onClick={() => handleEdit(todo.id)}
+                        onClick={() => onEdit(todo.id)}
                         variant="contained"
                     >
                         Edit
