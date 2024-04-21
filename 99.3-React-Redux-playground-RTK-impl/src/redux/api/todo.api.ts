@@ -64,4 +64,4 @@ export const api = createApi({
     })
 });
 
-export const { useGetTodosQuery, useGetTodoQuery, useCreateTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation } = api;
+export const { useGetTodosQuery, useGetTodoQuery, useCreateTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation, usePrefetch } = api;

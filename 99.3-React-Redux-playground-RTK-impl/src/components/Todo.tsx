@@ -10,10 +10,11 @@ import {
     Container,
     Box,
 } from "@mui/material";
-import { useCreateTodoMutation, useDeleteTodoMutation, useGetTodoQuery, useGetTodosQuery, useUpdateTodoMutation } from "../redux/api/todo.api";
+import { useCreateTodoMutation, useDeleteTodoMutation, useGetTodoQuery, useGetTodosQuery, usePrefetch, useUpdateTodoMutation } from "../redux/api/todo.api";
 import { Todo } from "../redux/api/types";
 
 function TodoWithAPI() {
+    const prefetchTodo = usePrefetch('getTodo');
     const [isTaskVisible, setIsTaskVisible] = useState(false);
     const [createTodo] = useCreateTodoMutation();
     const [updateTodo] = useUpdateTodoMutation();
@@ -65,6 +66,11 @@ function TodoWithAPI() {
         setIsEdited(true);
     };
 
+    const handleEditHover = (id: number) => {
+        console.log(id);
+        prefetchTodo(id, {force: true});
+    }
+
     return (
         <StyledContainer>
             <Box display={"flex"}>
@@ -94,14 +100,14 @@ function TodoWithAPI() {
                 {"Show/Hide"}
             </StyledAddButton>
             {isTaskVisible ?
-                <TaskList handleDone={handleDone} handleEdit={handleEdit} onDelete={onDelete} /> : null
+                <TaskList handleOnEditHover={handleEditHover} handleDone={handleDone} handleEdit={handleEdit} onDelete={onDelete} /> : null
             }
 
         </StyledContainer >
     );
 }
 
-const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
+const TaskList = ({ handleDone, handleEdit, onDelete, handleOnEditHover }: any) => {
 
     const { data: todoList = [] } = useGetTodosQuery(null, { refetchOnMountOrArgChange: true, refetchOnFocus: true, refetchOnReconnect: true });
 
@@ -121,6 +127,10 @@ const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
         handleEdit(todoToUpdate);
     }
 
+    const onEditHover = (id: number) =>{
+        handleOnEditHover(id);
+    }
+
     return (
         <List>
             {todoList && todoList.map((todo: Todo) => (
@@ -135,6 +145,7 @@ const TaskList = ({ handleDone, handleEdit, onDelete }: any) => {
                         {todo.val}
                     </StyledText>
                     <StyledListButton
+                        onMouseOver={()=> onEditHover(todo.id)}
                         onClick={() => onEdit(todo.id)}
                         variant="contained"
                     >
