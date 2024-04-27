@@ -28,12 +28,39 @@ export const api = createApi({
         }),
         createTodo: builder.mutation({
             query: (body: Partial<Todo>) => ({
-                url: "/todo",
+                url: "/todooasdo",
                 method: "POST",
                 body
             }),
             transformResponse: (response) => {
                 return response
+            },
+            async onQueryStarted(body, { dispatch, queryFulfilled }) {
+                let patchResult;
+
+                try {
+                    patchResult = dispatch(
+                        api.util.updateQueryData(
+                            'getTodos',
+                            null,
+                            (draft) => {
+                                console.log({ draft });
+
+                                const newTodo = { ...body, isDone: false, id: Math.random().toString(36) };
+                                draft.push(newTodo);
+
+                                console.log({ draft });
+                            }
+                        )
+                    )
+                    console.log("on Query started", body);
+
+                    await queryFulfilled;
+                } catch (error) {
+                    if (patchResult) {
+                        patchResult.undo();
+                    }
+                }
             },
             invalidatesTags: ["TODO"]
         }),
