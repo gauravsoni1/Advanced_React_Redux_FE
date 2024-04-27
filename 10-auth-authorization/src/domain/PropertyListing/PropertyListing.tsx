@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, styled } from "@mui/material";
 import AppBar from "../../components/AppBar/AppBar";
 import CategoryBar from "../../components/CategoryBar/CategoryBar";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
@@ -29,21 +29,29 @@ const PropertyListing = () => {
             <CategoryBar></CategoryBar>
             <Grid container spacing={3} padding={2}>
                 {map(data, (property) => (
-                    <Grid item xs={6} md={3} lg={2} key={property?._id}>
+                    <StyledGridItem item xs={6} md={3} lg={2} key={property?._id}>
                         <PropertyCard
                             key={property?._id}
                             imgSrc={property?.images?.picture_url}
                             name={property.name}
                             price={property.price}
                             rating={property?.review_score?.review_scores_rating} />
-                    </Grid>
+                    </StyledGridItem>
                 ))}
             </Grid>
             <FloatingMenu />
             <Notification />
         </Container>
     )
-
 }
+
+const StyledGridItem = styled(Grid)`
+  && {
+    flex-basis: 50%; // Two items per row on medium screens
+    @media (max-width: 960px) {
+      flex-basis: 100%; // One item per row on small screens
+    }
+  }
+`;
 
 export default PropertyListing;

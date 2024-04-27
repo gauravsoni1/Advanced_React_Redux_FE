@@ -20,7 +20,8 @@ export default {
             description: 'description',
             neighborhood_overview: 'neighborhood_overview',
             price: 'price',
-            summary: 'summary'
+            summary: 'summary',
+            image: 'image'
         }
     }
 }

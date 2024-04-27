@@ -35,6 +35,7 @@ const AddProperties = ({ handleSubmit }: InjectedFormProps) => {
                     <Field name={formFields.neighborhood_overview} label="Neighbourhood overview" variant="standard" component={ReduxTextField}></Field>
                     <Field name={formFields.price} label="Price" variant="standard" component={ReduxTextField}></Field>
                     <Field name={formFields.summary} label="Summary" variant="standard" component={ReduxTextField}></Field>
+                    <Field name={formFields.image} label="Image" variant="standard" component={ReduxTextField}></Field>
                 </Box>
             </DialogContent>
             <Box sx={{ padding: '16px 24px' }}>

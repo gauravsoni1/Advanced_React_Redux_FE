@@ -1,7 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
 import { Star } from '@mui/icons-material';
-import Image from '../../assets/auth_background.avif';
-import { blueGrey, yellow } from '@mui/material/colors';
+import { blueGrey } from '@mui/material/colors';
 import { useTranslation } from "../../../node_modules/react-i18next";
 
 export interface PropertyCardProps {
@@ -15,26 +14,38 @@ const PropertyCard = ({ imgSrc, name, price, rating = "1" }: PropertyCardProps) 
     const { t } = useTranslation();
 
     return (
-        <Box width={"300px"}>
+        <StyledBox width={"300px"}>
             <StyledImage src={imgSrc}></StyledImage>
             <Box padding={1}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant='h6'>{t('Property Name', { name: name })}</Typography>
                     <Box display={'flex'}>
                         <Typography>{parseFloat(rating) / 10}</Typography>
-                        <Star sx={{ color: yellow[700] }}></Star>
+                        <StyledStar />
                     </Box>
                 </Box>
                 <Typography color={blueGrey[700]}>{price} USD / night</Typography>
             </Box>
-        </Box>
+        </StyledBox>
     )
 }
 
 const StyledImage = styled('img')({
     borderRadius: '12px',
-    width: 'inherit',
-    height: '200px'
+    width: '100%',
+    height: 'auto'
 })
+
+const StyledBox = styled(Box)`
+  width: 100%; // Make the box fill the width of its container
+  @media (min-width: 600px) {
+    max-width: 300px; // Limit maximum width to 300px on larger screens
+  }
+`;
+
+const StyledStar = styled(Star)`
+  font-size: 16px;
+  color: 'yellow'
+`;
 
 export default PropertyCard;
