@@ -10,7 +10,8 @@ import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
     key: "root",
-    storage: storage
+    storage: storage,
+    blackList: [propertyApi.reducerPath]
 }
 
 const rootReducer = combineReducers({

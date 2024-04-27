@@ -16,6 +16,7 @@ export const propertyApi = createApi({
             }
         }
     }),
+    tagTypes: ["PROPERTY_LIST"],
     endpoints: (builder) => ({
         createProperty: builder.mutation({
             query: (body) => ({
@@ -29,6 +30,7 @@ export const propertyApi = createApi({
             transformErrorResponse(response: ServerResponse, meta, arg) {
                 return response?.data
             },
+            invalidatesTags: ["PROPERTY_LIST"]
         }),
         getPropertyList: builder.query({
             query: () => ({
@@ -41,6 +43,7 @@ export const propertyApi = createApi({
             transformErrorResponse(response: ServerResponse, meta, arg) {
                 return response?.data
             },
+            providesTags: ["PROPERTY_LIST"]
         })
     })
 })
