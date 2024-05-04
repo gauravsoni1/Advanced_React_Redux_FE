@@ -28,10 +28,13 @@ const userSlice = createSlice({
             // state.refresh_token = refresh_token;
 
             return action.payload
+        },
+        clearUserData: () => {
+            return userInitialState;
         }
     }
 })
 
 export default userSlice.reducer;
 
-export const { updateLanguage, updateUserData } = userSlice.actions;
+export const { updateLanguage, updateUserData, clearUserData } = userSlice.actions;

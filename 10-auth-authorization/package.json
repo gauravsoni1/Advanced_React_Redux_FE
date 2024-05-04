@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@reduxjs/toolkit": "^2.2.1",
+    "async-mutex": "^0.5.0",
     "country-flag-icons": "^1.5.9",
     "i18next": "^23.10.1",
     "lodash-es": "^4.17.21",

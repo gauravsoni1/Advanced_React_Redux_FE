@@ -1,12 +1,26 @@
 import './App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Auth from './domain/Auth/Auth';
 import Signin from './domain/Auth/Signin';
 import Signup from './domain/Auth/Signup';
 import Landing from './domain/Landing/Landing';
 import PropertyListing from './domain/PropertyListing/PropertyListing';
+import { useDispatch, useSelector } from 'react-redux';
+import { navStateRoute } from './redux/selectors/navSelector';
+import { useEffect } from 'react';
+import { clearRoute } from './redux/slice/navSlice';
 
 function App() {
+  const navRoute = useSelector(navStateRoute);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{ 
+    if (navRoute){
+      navigate(navRoute);
+      dispatch(clearRoute());
+    }
+  }, [navRoute])
 
   return (
     <Routes>

@@ -7,6 +7,7 @@ import { userApi } from '../hooks/api/user.api';
 import { propertyApi } from "../hooks/api/property.api";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import navReducer from './slice/navSlice';
 
 const persistConfig = {
     key: "root",
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     form: FormReducer,
     modal: modalReducer,
+    nav: navReducer,
     notification: notificationReducer,
     user: userReducer,
     [userApi.reducerPath]: userApi.reducer,
