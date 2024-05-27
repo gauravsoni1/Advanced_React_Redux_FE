@@ -26,7 +26,9 @@ const Signin = ({ handleSubmit, valid, anyTouched }: InjectedFormProps) => {
         dispatch(updateUserData({
             access_token: data.access_token,
             refresh_token: data.refresh_token,
-            usr_id: data.usr_id
+            usr_id: data.usr_id,
+            usr_permissions: data.usr_permissions,
+            usr_role: data.usr_role
         }))
         navigate('/listing');
     }

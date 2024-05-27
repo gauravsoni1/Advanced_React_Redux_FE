@@ -1,17 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Permissions } from "../../const/permissions";
 
 interface userInitialStateInterface {
     lang?: string;
     usr_id: string;
     access_token: string;
     refresh_token: string;
+    usr_role: string;
+    usr_permissions: Permissions[] | "*";
 }
 
 const userInitialState: userInitialStateInterface = {
     lang: 'en',
     usr_id: '',
     access_token: '',
-    refresh_token: ''
+    refresh_token: '',
+    usr_role: '',
+    usr_permissions: []
 }
 
 const userSlice = createSlice({

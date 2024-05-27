@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Modal_Types, openModal } from '../../../redux/slice/modalSlice';
 import { useTranslation } from '../../../../node_modules/react-i18next';
 import { Translations } from '../../../const/translations';
+import AuthCheck from '../../../components/AuthCheck';
+import { Permissions } from '../../../const/permissions';
 
 const FloatingMenu = () => {
     const { t } = useTranslation();
@@ -34,14 +36,22 @@ const FloatingMenu = () => {
                 anchorEl={fabAnchorEl}
                 transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                <MenuItem onClick={onClickAddProperty}>
-                    <Add />
-                    <Typography>{t(Translations.ADD_PROPERTY)}</Typography>
-                </MenuItem>
-                <MenuItem>
-                    <DeleteOutline />
-                    <Typography>{t(Translations.DELETE_PROPERTY)}</Typography>
-                </MenuItem>
+
+                <AuthCheck permissions={[Permissions.CREATE_PROPERTY]}>
+                    <MenuItem onClick={onClickAddProperty}>
+                        <Add />
+                        <Typography>{t(Translations.ADD_PROPERTY)}</Typography>
+                    </MenuItem>
+                </AuthCheck>
+
+                <AuthCheck permissions={[Permissions.DELETE_PROPERTY]}>
+                    <MenuItem>
+                        <DeleteOutline />
+                        <Typography>{t(Translations.DELETE_PROPERTY)}</Typography>
+                    </MenuItem>
+                </AuthCheck>
+
+
             </Menu>
         </Box>
     )
