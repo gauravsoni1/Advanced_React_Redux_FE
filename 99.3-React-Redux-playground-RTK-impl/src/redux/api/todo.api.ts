@@ -28,7 +28,7 @@ export const api = createApi({
         }),
         createTodo: builder.mutation({
             query: (body: Partial<Todo>) => ({
-                url: "/todooasdo",
+                url: "/todo",
                 method: "POST",
                 body
             }),
