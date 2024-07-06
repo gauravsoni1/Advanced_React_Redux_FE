@@ -1,6 +1,6 @@
 import { Paper, InputBase, IconButton } from "@mui/material";
 import { Search } from '@mui/icons-material';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLazySearchPropertyQuery } from "../../hooks/api/property.api";
 import { debounce } from 'lodash-es'
 
@@ -10,16 +10,12 @@ const SearchBar = () => {
 
     console.log(data)
 
+    const memonizedSearchPropery = useCallback(debounce((val) => searchProperty(val), 3000), [])
+
     const onChange = (event: any) => {
         setSearchValue(event?.target?.value);
+        memonizedSearchPropery(event?.target?.value)
     }
-
-    useEffect(() => {
-        if (searchValue) {
-            const debouncedSearchPropery = debounce(()=> searchProperty(searchValue), 3000);
-            debouncedSearchPropery();
-        }
-    }, [searchValue])
 
     return (
         <Paper sx={{ p: '1px 2px', display: "flex", width: '300px', justifyContent: 'space-between' }}>

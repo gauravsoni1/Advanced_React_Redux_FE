@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateLanguage } from '../../redux/slice/userSlice';
 import Notification from './Notification/Notification';
+import District from './District/DIstrict';
 
 const AppBar = () => {
     const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const AppBar = () => {
                     </Box>
 
                     <Notification />
+                    <District />
                     <StyledIconButton><AccountCircle sx={{ width: 30, height: 30 }} /></StyledIconButton>
                 </Box>
             </Toolbar>
