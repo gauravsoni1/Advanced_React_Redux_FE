@@ -9,10 +9,13 @@ import { isEmailValid, passwordValidation } from "../../utils/validations";
 import { useSignInMutation } from '../../hooks/api/user.api';
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../../redux/slice/userSlice";
+import { useContext } from "react";
+import { ThemeContext } from "../../theme/ThemeProvider";
 
 const { SIGN_IN: { formName, formFields } } = FORM;
 
 const Signin = ({ handleSubmit, valid, anyTouched }: InjectedFormProps) => {
+    const { theme } = useContext(ThemeContext)
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [signin, { isLoading, isError, isSuccess, data, error }] = useSignInMutation();
@@ -46,7 +49,7 @@ const Signin = ({ handleSubmit, valid, anyTouched }: InjectedFormProps) => {
                     <Field validate={[passwordValidation]} name={formFields.password} label="Enter Password" component={ReduxTextField} type="password" />
                 </StyledInputBox>
                 <StyledAuthFooter>
-                    <Button disabled={!anyTouched || !valid || isLoading} sx={{ marginBottom: 2 }} variant='contained' type="submit">Sign In</Button>
+                    <Button disabled={!anyTouched || !valid || isLoading} sx={{ marginBottom: 2 }} variant='contained' type="submit" color={theme.button}>Sign In</Button>
                     <Typography>Create a new account <StyledLink onClick={() => { navigate("/signup") }}>here</StyledLink> </Typography>
                 </StyledAuthFooter>
 

@@ -12,11 +12,26 @@ import { clearRoute } from './redux/slice/navSlice';
 import AddUser from './domain/AddUser';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Permissions } from './const/permissions';
+import withMouseTracking from './components/HOC/withMouseTracking';
+import { useIsUserIdle } from './hooks/useIsUserIdle';
 
 function App() {
   const navRoute = useSelector(navStateRoute);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isUserIdle, getRemainingTime } = useIsUserIdle();
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     console.log(`User will be logged out in ${getRemainingTime()}`);
+  //   }, 1000)
+  // }, [])
+
+  // useEffect(() => {
+  //   if (isUserIdle) {
+  //     console.log("User will be logged out");
+  //   }
+  // }, [isUserIdle])
 
   useEffect(() => {
     if (navRoute) {
@@ -44,4 +59,4 @@ function App() {
   )
 }
 
-export default App
+export default withMouseTracking(App); 

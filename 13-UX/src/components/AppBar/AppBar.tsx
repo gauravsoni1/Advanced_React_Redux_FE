@@ -1,15 +1,17 @@
 import { AppBar as MUIAppBar, Toolbar, Box, Typography, IconButton, styled, Menu, MenuItem } from '@mui/material';
-import { Roofing, Language, AccountCircle } from '@mui/icons-material';
+import { Roofing, Language, AccountCircle, DarkMode } from '@mui/icons-material';
 import SearchBar from './SearchBar';
 import { US, FR } from 'country-flag-icons/react/3x2';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateLanguage } from '../../redux/slice/userSlice';
 import Notification from './Notification/Notification';
 import District from './District/DIstrict';
+import { ThemeContext } from '../../theme/ThemeProvider';
 
 const AppBar = () => {
     const dispatch = useDispatch();
+    const { theme, toggleTheme } = useContext(ThemeContext);
     const [langAnchorEl, setLangAnchorEl] = useState(null as (null | HTMLElement));
 
     const languageOptions = [
@@ -30,7 +32,7 @@ const AppBar = () => {
     }
 
     return (
-        <MUIAppBar>
+        <MUIAppBar color={theme.button}>
             <Toolbar>
                 <Box sx={{ display: 'fex' }}>
                     <Roofing></Roofing>
@@ -64,6 +66,7 @@ const AppBar = () => {
                     <Notification />
                     <District />
                     <StyledIconButton><AccountCircle sx={{ width: 30, height: 30 }} /></StyledIconButton>
+                    <StyledIconButton theme={theme} onClick={toggleTheme}><DarkMode sx={{ width: 30, height: 30 }} /></StyledIconButton>
                 </Box>
             </Toolbar>
         </MUIAppBar>
@@ -75,9 +78,9 @@ const StyledMenuItemWithFlag = styled(MenuItem)({
     alignItems: 'center'
 })
 
-const StyledIconButton = styled(IconButton)({
-    color: 'white'
-});
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+    color: `${theme.color}`
+}));
 
 const StyledFlagIcon = styled('div')({
     display: 'flex',

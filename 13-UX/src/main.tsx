@@ -10,6 +10,7 @@ import { persistor, store } from './redux/store.ts';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorBoundary/ErrorFallback.tsx';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ThemeProvider } from './theme/ThemeProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Provider store={store}>
-            <App />
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
           </Provider>
         </BrowserRouter>
       </PersistGate>
