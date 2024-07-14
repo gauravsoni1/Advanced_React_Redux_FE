@@ -29,10 +29,21 @@ export const propertyApi = createApi({
 const publicPropertyApi = publicApiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getPropertyList: builder.query({
-            query: () => ({
+            query: (body) => ({
                 url: "/property/list",
                 method: "POST",
+                body
             }),
+            serializeQueryArgs: ({ endpointName }) => {
+                return endpointName;
+            },
+            forceRefetch: ({ currentArg, previousArg }) => {
+                console.log({currentArg, previousArg});
+                return currentArg !== previousArg;
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.push(...newItems);
+            },
             transformResponse: (response: ServerResponse) => {
                 return response?.data;
             },

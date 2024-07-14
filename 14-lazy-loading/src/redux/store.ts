@@ -14,7 +14,7 @@ import navReducer from './slice/navSlice';
 const persistConfig = {
     key: "root",
     storage: storage,
-    blacklist: [propertyApi.reducerPath, notificationApi.reducerPath]
+    blacklist: [propertyApi.reducerPath, notificationApi.reducerPath, publicApiSlice.reducerPath]
 }
 
 const rootReducer = combineReducers({

@@ -8,7 +8,7 @@ const SearchBar = () => {
     const [searchValue, setSearchValue] = useState('');
     const [searchProperty, { isFetching, isError, isSuccess, data }] = useLazySearchPropertyQuery();
 
-    console.log(data)
+    // console.log(data)
 
     const memonizedSearchPropery = useCallback(debounce((val) => searchProperty(val), 3000), [])
 

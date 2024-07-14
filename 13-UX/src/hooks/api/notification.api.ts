@@ -21,12 +21,12 @@ export const notificationApi = createApi({
                 return response?.data
             },
             async onQueryStarted(args, { updateCachedData, queryFulfilled }) {
-                console.log("Called query started", args);
+                // console.log("Called query started", args);
                 await queryFulfilled;
-                console.log("Query was fulfulled");
+                // console.log("Query was fulfulled");
 
                 const propertyAddedHandler = (event: any) => {
-                    console.log("handler called",event);
+                    // console.log("handler called",event);
 
                     updateCachedData((draft) => {
                         draft.push(event);
