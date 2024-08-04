@@ -10,7 +10,7 @@ export const userApi = createApi({
             query: (body) => ({
                 url: 'user/signin',
                 method: "POST",
-                body
+                body: {...body, fingerprint: sessionStorage.getItem('fingerprint')}
             }),
             transformResponse: (response:ServerResponse) =>{
                 return response?.data;

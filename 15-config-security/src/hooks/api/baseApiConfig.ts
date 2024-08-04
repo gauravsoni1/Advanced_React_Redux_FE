@@ -16,6 +16,7 @@ export const baseQueryWithAuth = fetchBaseQuery({
 
         if (token) {
             headers.set("token", token);
+            headers.set('fingerprint', sessionStorage.getItem("fingerprint") || "");
         }
     }
 })

@@ -14,12 +14,22 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { Permissions } from './const/permissions';
 import withMouseTracking from './components/HOC/withMouseTracking';
 import { useIsUserIdle } from './hooks/useIsUserIdle';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 function App() {
   const navRoute = useSelector(navStateRoute);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserIdle, getRemainingTime } = useIsUserIdle();
+
+  useEffect(() => {
+    (async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      console.log(result.visitorId);
+      sessionStorage.setItem('fingerprint', result.visitorId);
+    })()
+  }, []);
 
   // useEffect(() => {
   //   setInterval(() => {
