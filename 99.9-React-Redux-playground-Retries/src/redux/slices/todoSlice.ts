@@ -20,7 +20,7 @@ export const todoSlice = createSlice({
     reducers: {
         addTodo: (state, action: PayloadAction<TodoType>) => {
             const newTodo = action.payload;
-            state.todos = undefined;
+            state.todos = [...state.todos, newTodo];
         },
         removeTodo: (state, action: PayloadAction<number>) => {
             const todoIdToRemove = action.payload;
