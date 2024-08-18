@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Todo } from "./types";
+import { Draft } from "@reduxjs/toolkit";
 
 export const api = createApi({
     baseQuery: fetchBaseQuery({
@@ -36,33 +37,30 @@ export const api = createApi({
                 return response
             },
             async onQueryStarted(body, { dispatch, queryFulfilled }) {
-                let patchResult;
+                // console.log("Query started", body);
+                const tempId = Math.random().toString(36);
+                const patchResult = dispatch(api.util.updateQueryData('getTodos', null, (draft) => {
+                    console.log(draft);
+                    const tempTodo = { ...body, isDone: false, id: tempId };
+                    draft.push(tempTodo);
+                }))
 
                 try {
-                    patchResult = dispatch(
-                        api.util.updateQueryData(
-                            'getTodos',
-                            null,
-                            (draft) => {
-                                console.log({ draft });
-
-                                const newTodo = { ...body, isDone: false, id: Math.random().toString(36) };
-                                draft.push(newTodo);
-
-                                console.log({ draft });
-                            }
-                        )
-                    )
-                    console.log("on Query started", body);
-
-                    await queryFulfilled;
+                    const { data: returnedData } = await queryFulfilled;
+                    dispatch(api.util.updateQueryData('getTodos', null, (draft) => {
+                        const todo = draft.find(t => t.id === tempId);
+                        if (todo){
+                            todo.id = returnedData.data.id
+                        }
+                    }))
+                    // console.log("Query ended");
                 } catch (error) {
-                    if (patchResult) {
-                        patchResult.undo();
-                    }
+                    // console.log('undo cache update');
+                    patchResult.undo();
                 }
+
             },
-            invalidatesTags: ["TODO"]
+            invalidatesTags: []
         }),
         updateTodo: builder.mutation({
             query: (body: Partial<Todo>) => ({

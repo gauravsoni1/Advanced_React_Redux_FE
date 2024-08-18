@@ -68,7 +68,7 @@ function TodoWithAPI() {
 
     const handleEditHover = (id: number) => {
         console.log(id);
-        prefetchTodo(id, {force: true});
+        prefetchTodo(id, { force: true });
     }
 
     return (
@@ -127,14 +127,14 @@ const TaskList = ({ handleDone, handleEdit, onDelete, handleOnEditHover }: any) 
         handleEdit(todoToUpdate);
     }
 
-    const onEditHover = (id: number) =>{
+    const onEditHover = (id: number) => {
         handleOnEditHover(id);
     }
 
     return (
         <List>
             {todoList && todoList.map((todo: Todo) => (
-                <StyledList divider key={todo.id}>
+                <StyledList divider key={todo.id} id={todo.id.toString()}>
                     <Checkbox
                         onClick={() => onDone(todo.id)}
                         checked={todo.isDone}
@@ -145,7 +145,7 @@ const TaskList = ({ handleDone, handleEdit, onDelete, handleOnEditHover }: any) 
                         {todo.val}
                     </StyledText>
                     <StyledListButton
-                        onMouseOver={()=> onEditHover(todo.id)}
+                        onMouseOver={() => onEditHover(todo.id)}
                         onClick={() => onEdit(todo.id)}
                         variant="contained"
                     >
